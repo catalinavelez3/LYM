@@ -1,0 +1,123 @@
+using gold.structures.automaton.*
+using gold.visualization.automaton.*
+using gold.structures.map.*
+
+
+
+procedure main(args:String[]) begin
+    m = createTransducer()
+    	GAutomataFrame.show(m)
+	 Utilities.test(m)
+end
+  
+        
+
+
+
+ 
+function createTransducer():ITransducer begin
+	
+
+  Q:= {"inic", "fin", "err", '0','a','b','c',"aa","ab","ac","aaa","aab","aac","aba","abc","aca","acb","acc","ba", "bb", "bc", "baa","bab","bac", "bba", "bbb", "bbc", "bca", "bcb","bcc","ca","cb", "cc", "caa", "cab", "cac", "cba", "cbb", "cbc", "cca", "ccb", "ccc"}
+	Σ:= {'a','b','c','&'}
+	Out:= {'a','b','c','&', '*'}
+	q₀:= "inic"
+	F:= {"fin"}
+	return 	GDeterministicTransducer(Q,Σ,Out,q₀,F,δ,g,h)
+end
+
+
+function δ(q,s) begin
+	if q ∈{"fin","err"} then return "err"
+	elseif s='&' then return "err"
+	elseif q = "inic" and s ∈ {'a','b','c'} then return ⟨s⟩
+	elseif q = 'a' and s = 'a' then return ⟨"aa"⟩
+	elseif q = 'a' and s = 'b' then return ⟨"ab"⟩
+	elseif q = 'a' and s = 'c' then return ⟨"ac"⟩
+		
+	elseif q = "aa" and s = 'a' then return ⟨"aaa"⟩
+	elseif q = "aa" and s = 'b' then return ⟨"aab"⟩
+	elseif q = "aa" and s = 'c' then return ⟨"aac"⟩
+		
+	elseif q = "ab" and s = 'a' then return ⟨"aba"⟩
+	elseif q = "ab" and s = 'b' then return ⟨"abb"⟩
+	elseif q = "ab" and s = 'c' then return ⟨"abc"⟩
+		
+	elseif q = "ac" and s = 'a' then return ⟨"aca"⟩
+	elseif q = "ac" and s = 'b' then return ⟨"acb"⟩
+	elseif q = "ac" and s = 'c' then return ⟨"acc"⟩
+		
+		
+			
+		
+		
+		
+		
+	elseif q = 'b' and s = 'a' then return ⟨"ba"⟩
+	elseif q = 'b' and s = 'b' then return ⟨"bb"⟩
+	elseif q = 'b' and s = 'c' then return ⟨"bc"⟩
+		
+	elseif q = "ba" and s = 'a' then return ⟨"baa"⟩
+	elseif q = "ba" and s = 'b' then return ⟨"bab"⟩
+	elseif q = "ba" and s = 'c' then return ⟨"bac"⟩
+		
+	elseif q = "bb" and s = 'a' then return ⟨"bba"⟩
+	elseif q = "bb" and s = 'b' then return ⟨"bbb"⟩
+	elseif q = "bb" and s = 'c' then return ⟨"bbc"⟩
+		
+	elseif q = "bc" and s = 'a' then return ⟨"bca"⟩
+	elseif q = "bc" and s = 'b' then return ⟨"bcb"⟩
+	elseif q = "bc" and s = 'c' then return ⟨"bcc"⟩
+		
+		
+		
+		
+		
+		
+	elseif q = 'c' and s = 'a' then return ⟨"ca"⟩
+	elseif q = 'c' and s = 'b' then return ⟨"cb"⟩
+	elseif q = 'c' and s = 'c' then return ⟨"cc"⟩
+		
+	elseif q = "ca" and s = 'a' then return ⟨"caa"⟩
+	elseif q = "ca" and s = 'b' then return ⟨"cab"⟩
+	elseif q = "ca" and s = 'c' then return ⟨"cac"⟩
+	
+	elseif q = "cb" and s = 'a' then return ⟨"cba"⟩
+	elseif q = "cb" and s = 'b' then return ⟨"cbb"⟩
+	elseif q = "cb" and s = 'c' then return ⟨"cbc"⟩
+		
+	elseif q = "cc" and s = 'a' then return ⟨"cca"⟩
+	elseif q = "cc" and s = 'b' then return ⟨"ccb"⟩
+	elseif q = "cc" and s = 'c' then return ⟨"ccc"⟩
+		
+		
+	elseif  s = '&' then return ⟨'0'⟩
+	elseif  q = '0' then return ⟨s⟩
+		
+	else return "err"
+end
+end
+
+
+
+
+function g(q) begin
+	 return λ
+end
+
+
+
+function h(q,σ) begin
+	if q ∈{"fin","err"} then
+		return ""
+	elseif σ= 0 then return q
+	else return ""
+end
+end
+
+
+
+
+  
+
+
