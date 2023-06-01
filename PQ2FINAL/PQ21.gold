@@ -1,0 +1,61 @@
+import java.util.List;
+import java.util.ArrayList;
+
+procedure main(args:String[]) begin
+	GAutomataFrame.show(create())
+	Utilities.test(create())
+end
+
+function getName() begin
+	return "DFA to recognize the language W1$W2 where each letter occurs less than six times in W1 and the same number of times in W1 and W2"
+end
+
+
+function create():IAutomaton begin
+	Q := {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	Σ := {'a', 'b', 'c', '$'} 
+	q₀ := 0 
+	F := {6} 
+	delta := function(q, c) begin
+		if q == 0 then
+			if c == '$' then return 6
+			else return q+1
+				
+		else if q == 1 or q == 2 or q == 3 or q == 4 or q == 5 then
+			if c == '$' then return 7
+			else return q+1
+				
+		else if q == 7 then
+			if c == '$' then return 6
+			else return 8
+				
+		else if q == 8 or q == 9 then
+			if c == '$' then return 6
+			else return q
+				
+		else return 9 
+		end
+	end
+	
+	M := GDeterministicAutomaton(Q, Σ, q₀, F, delta)
+	
+	return M
+end
+
+procedure testStrings(A:IAutomaton) begin
+ 	var sc:java.util.Scanner(System.$in)
+ 	var  string: String
+   	
+   	print "Testing"
+
+	while true do
+		print "----------------------------"
+		print "Enter a string:"
+		string:=sc.nextLine()
+		if string = "STOP" then  break end
+		result:=A.acceptsString(string)
+		print "The string was "+(result?"accepted":"REJECTED") 
+	end
+	print "End test"
+end
+
